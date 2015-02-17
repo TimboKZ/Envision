@@ -88,8 +88,8 @@ public class Audio {
         powerSpectrum.addListener(spectralDifference);
         PeakDetector beatDetector = new PeakDetector();
         spectralDifference.addListener(beatDetector);
-        beatDetector.setThreshold(0.2f);
-        beatDetector.setAlpha(.9f);
+        beatDetector.setThreshold(0.1f);
+        beatDetector.setAlpha(0.98f);
         beatDetector.addMessageListener(new Bead() {
             protected void messageReceived(Bead b) {
                 beat = 1.0f;
@@ -148,6 +148,30 @@ public class Audio {
         }
     }
 
+    public float[] getBufferValues() {
+
+        float[] values = new float[512];
+
+        for(int i = 0; i < 512; i++)
+            values[i] = gain.getValue(0, (int) i);
+
+        return values;
+
+    }
+
+    public float[] getSemiCondensedBufferValues() {
+
+        float[] values = getBufferValues();
+
+        float[] condensedValues = new float[256];
+
+        for(int i = 0; i < 256; i++)
+            condensedValues[i] = (values[i * 2] + values[i * 2 + 1]) / 2;
+
+        return condensedValues;
+
+    }
+
     public float[] getValues() {
         float[] values = powerSpectrum.getFeatures();
         if(values == null) {
@@ -156,6 +180,20 @@ public class Audio {
                 values[i] = 0.0f;
         }
         return values;
+    }
+
+    public float[] getSemiCondensedValues() {
+        float[] values = getValues();
+        float value = 0.0f;
+        float[] condensedValues = new float[32];
+        for(int k = 0; k < 32; k++) {
+            value = 0.0f;
+            for(int i = 0; i < 8; i++) {
+                value += values[k * 8 + i];
+            }
+            condensedValues[k] = value / 16.0f;
+        }
+        return condensedValues;
     }
 
     public float[] getCondensedValues() {
@@ -227,6 +265,8 @@ public class Audio {
     public SamplePlayer getSamplePlayer() {
         return samplePlayer;
     }
+
+    public Gain getGain() { return  gain; }
 
     public float getBeat() {
         return beat;

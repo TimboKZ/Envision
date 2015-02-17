@@ -4,6 +4,7 @@ import kz.kuzhagaliyev.TimboKZ.Envision.Core;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
+import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -60,13 +61,7 @@ public class Window {
             System.exit(1);
         }
 
-        glViewport(0, 0, Display.getWidth(), Display.getHeight());
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
-        glMatrixMode(GL_MODELVIEW);
-        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+        refreshOpenGL();
 
         Mouse.setCursorPosition(Display.getWidth() / 2, Display.getHeight() / 2);
 
@@ -131,8 +126,35 @@ public class Window {
         glColor3f(1, 1, 1);
     }
 
+    public void refreshOpenGL() {
+        glViewport(0, 0, Display.getWidth(), Display.getHeight());
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+        glDisable(GL_DEPTH_TEST);
+    }
+
+    public void shaderOpenGL() {
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glShadeModel(GL_SMOOTH);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClearDepth(1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT,
+                GL_NICEST);
+    }
+
     public void update() {
 
+        refreshOpenGL();
+        glLoadIdentity();
         glColor3f(1, 1, 1);
 
         if (controlsSlidingUp)
