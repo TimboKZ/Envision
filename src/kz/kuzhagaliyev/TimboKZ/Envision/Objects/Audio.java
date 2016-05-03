@@ -32,10 +32,7 @@ public class Audio {
     private SamplePlayer samplePlayer;
     private AudioContext audioContext;
     private Gain gain;
-    private Glide gainValue;
-    private ShortFrameSegmenter shortFrameSegmenter;
     private PowerSpectrum powerSpectrum;
-    private FFT fft;
 
     private float beat = 0.0f;
 
@@ -48,7 +45,7 @@ public class Audio {
     public boolean chooseFile() {
         choosingFile = true;
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("C:/Users/Timur Kuzhagaliyev/Music/Singles/"));
+        fileChooser.setCurrentDirectory(new File("D:\\Music\\Singles\\"));
         int result = fileChooser.showOpenDialog(new JPanel());
         if (result == JFileChooser.APPROVE_OPTION) {
             path = fileChooser.getSelectedFile().getPath();
@@ -73,13 +70,13 @@ public class Audio {
             System.exit(1);
         }
         length = samplePlayer.getSample().getLength();
-        gainValue = new Glide(audioContext, 1.0f, 20);
+        Glide gainValue = new Glide(audioContext, 1.0f, 20);
         gain = new Gain(audioContext, 1, gainValue);
         gain.addInput(samplePlayer);
         audioContext.out.addInput(gain);
-        shortFrameSegmenter = new ShortFrameSegmenter(audioContext);
+        ShortFrameSegmenter shortFrameSegmenter = new ShortFrameSegmenter(audioContext);
         shortFrameSegmenter.addInput(audioContext.out);
-        fft = new FFT();
+        FFT fft = new FFT();
         shortFrameSegmenter.addListener(fft);
         powerSpectrum = new PowerSpectrum();
         fft.addListener(powerSpectrum);

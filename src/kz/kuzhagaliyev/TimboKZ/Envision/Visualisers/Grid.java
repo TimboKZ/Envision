@@ -3,6 +3,7 @@ package kz.kuzhagaliyev.TimboKZ.Envision.Visualisers;
 import kz.kuzhagaliyev.TimboKZ.Envision.Core;
 import kz.kuzhagaliyev.TimboKZ.Envision.Objects.Visualiser;
 import org.lwjgl.opengl.Display;
+
 import static org.lwjgl.opengl.GL11.*;
 
 /**

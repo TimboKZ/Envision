@@ -48,7 +48,7 @@ public class Core {
         visualisers.put(Keyboard.KEY_2, new Wave());
         visualisers.put(Keyboard.KEY_3, new Bridges());
         visualisers.put(Keyboard.KEY_4, new Grid());
-        currentVisualiser = visualisers.get(Keyboard.KEY_4);
+        currentVisualiser = visualisers.get(Keyboard.KEY_5);
         loop();
         cleanUp();
     }

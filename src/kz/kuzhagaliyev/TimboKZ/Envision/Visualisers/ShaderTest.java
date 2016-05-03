@@ -7,11 +7,6 @@ import kz.kuzhagaliyev.TimboKZ.Envision.Util;
 import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.util.glu.GLU;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 
 /**
  * @author Timur Kuzhagaliyev
@@ -42,9 +37,9 @@ public class ShaderTest extends Visualiser {
             mean += values[i];
         mean /= 64;
 
-        Util.drawRect(0, 0, Display.getWidth(), Display.getHeight(), 1);
+        Util.drawRect(0, 0, Display.getWidth() / 2, Display.getHeight() / 2, 1);
 
-        GL20.glUniform1f(GL20.glGetUniformLocation(shader.getProgram(), "mean"), Math.abs(mean));
+        GL20.glUniform1f(GL20.glGetUniformLocation(shader.getProgram(), "mean"), (float) Math.abs(Math.log(mean)));
 
         ARBShaderObjects.glUseProgramObjectARB(0);
 

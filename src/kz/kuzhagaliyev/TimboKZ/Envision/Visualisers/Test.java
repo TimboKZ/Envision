@@ -24,13 +24,11 @@ public class Test extends Visualiser {
 
     public void render() {
 
-
         float[] values = Core.getAudio().getValues();
         float mean = 0.0f;
         for(int i = 0; i < 64; i++)
             mean += values[i];
         mean /= 64;
-
 
         float barWidth = (float) Display.getWidth() / 64f;
         float adjustment = 12f;

@@ -127,7 +127,7 @@ public class Impulse extends Visualiser {
                 glPushMatrix();
                 {
                     glTranslatef(Display.getWidth() / 2, Display.getHeight() / 2, 0);
-                    glRotatef(System.nanoTime() / 100000000.0f, 0, 0, 1);
+                    glRotatef(System.nanoTime() / 100000000.0f, 230, 0, 1);
                     glBegin(GL11.GL_TRIANGLES);
                     float x = 0.0f;
                     float y = -1.0f * sizeMultiplier * Math.abs(mean);
